@@ -1,7 +1,8 @@
 # Welcome to the Tiny Flappy Bird (forked version)
 
-Build walkthrough in this Youtube video (original):
-[![Video preview](https://img.youtube.com/vi/mfk8Rk2eUJY/0.jpg)](https://www.youtube.com/watch?v=mfk8Rk2eUJY)
+[Build walkthrough in this Youtube video (original)](https://www.youtube.com/watch?v=mfk8Rk2eUJY)
+
+---
 
 ## Improvements in this version
 
