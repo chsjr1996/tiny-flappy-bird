@@ -12,6 +12,7 @@ var birdX = birdDY = score = bestScore = 0;
 var timeout = birdSize = pipeWidth = topPipeBottomY = 24;
 var birdY = pipeGap = 200;
 var canvasSize = pipeX = 400;
+var immortalBird = false; // For tests or others things...
 var interval;
 
 /**
@@ -83,6 +84,7 @@ drawRetry = () => {
 }
 
 gameOver = () => {
+    if (immortalBird) return;
     clearInterval(interval);
     interval = null;
     drawRetry();
