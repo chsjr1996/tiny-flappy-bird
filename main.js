@@ -20,7 +20,7 @@ var interval;
  */
 
 getRandomArbitrary = (min, max) => {
-    return Math.random() * (max - min) + min;
+  return Math.random() * (max - min) + min;
 }
 
 /**
@@ -28,67 +28,67 @@ getRandomArbitrary = (min, max) => {
  */
 
 drawSky = () => {
-    ctx.fillStyle = "skyblue";
-    ctx.fillRect(0, 0, canvasSize, canvasSize);
+  ctx.fillStyle = "skyblue";
+  ctx.fillRect(0, 0, canvasSize, canvasSize);
 }
 
 drawBird = () => {
-    birdY -= birdDY -= 0.5;
-    ctx.drawImage(bird, birdX, birdY, birdSize * (524 / 374), birdSize);
+  birdY -= birdDY -= 0.5;
+  ctx.drawImage(bird, birdX, birdY, birdSize * (524 / 374), birdSize);
 }
 
 drawPipes = () => {
-    ctx.fillStyle = "green";
-    pipeX -= 8;
+  ctx.fillStyle = "green";
+  pipeX -= 8;
 
-    // Pipe off screen? Then reset pipe and randomize gap.
-    pipeX < -pipeWidth &&
-        (
-            (pipeX = canvasSize),
-            (pipeGap = getRandomArbitrary(100, 200)),
-            (topPipeBottomY = pipeGap * Math.random())
-        );
+  // Pipe off screen? Then reset pipe and randomize gap.
+  pipeX < -pipeWidth &&
+    (
+      (pipeX = canvasSize),
+      (pipeGap = getRandomArbitrary(100, 200)),
+      (topPipeBottomY = pipeGap * Math.random())
+    );
 
-    // Draw top and bottom pipe
-    ctx.fillRect(pipeX, 0, pipeWidth, topPipeBottomY);
-    ctx.fillRect(pipeX, topPipeBottomY + pipeGap, pipeWidth, canvasSize);
+  // Draw top and bottom pipe
+  ctx.fillRect(pipeX, 0, pipeWidth, topPipeBottomY);
+  ctx.fillRect(pipeX, topPipeBottomY + pipeGap, pipeWidth, canvasSize);
 }
 
 drawScore = () => {
-    ctx.fillStyle = "black";
-    ctx.font = "14px sans-serif";
-    ctx.fillText('Current: '+score++, 9, 25);
-    bestScore = bestScore < score ? score : bestScore;
-    ctx.fillText(`Best: ${bestScore}`, 9, 50);
+  ctx.fillStyle = "black";
+  ctx.font = "14px sans-serif";
+  ctx.fillText('Current: ' + score++, 9, 25);
+  bestScore = bestScore < score ? score : bestScore;
+  ctx.fillText(`Best: ${bestScore}`, 9, 50);
 }
 
 drawRetry = () => {
-    // Cover all canvas with black rect
-    ctx.fillStyle = "black"
-    ctx.fillRect(0, 0, canvasSize, canvasSize)
+  // Cover all canvas with black rect
+  ctx.fillStyle = "black"
+  ctx.fillRect(0, 0, canvasSize, canvasSize)
 
-    // Draw retry message
-    ctx.fillStyle = "white"
-    ctx.font = "20px sans-serif";
+  // Draw retry message
+  ctx.fillStyle = "white"
+  ctx.font = "20px sans-serif";
 
-    const firstMsg = `End game, your score is: ${score}`;
-    const secondMsg = 'Push button to retry';
-    const firstMsgWidth = ctx.measureText(firstMsg).width;
-    const secondMsgWidth = ctx.measureText(secondMsg).width;
+  const firstMsg = `End game, your score is: ${score}`;
+  const secondMsg = 'Push button to retry';
+  const firstMsgWidth = ctx.measureText(firstMsg).width;
+  const secondMsgWidth = ctx.measureText(secondMsg).width;
 
-    ctx.fillText(firstMsg, (canvasSize / 2) - (firstMsgWidth/2), (canvasSize / 2))
-    ctx.fillText(secondMsg, (canvasSize / 2) - (secondMsgWidth/2), ((canvasSize / 2) + 40));
+  ctx.fillText(firstMsg, (canvasSize / 2) - (firstMsgWidth / 2), (canvasSize / 2))
+  ctx.fillText(secondMsg, (canvasSize / 2) - (secondMsgWidth / 2), ((canvasSize / 2) + 40));
 
-    // Define action to restart game loop
-    pushBtn.onclick = () => (!interval) && gameStartLoop();
+  // Define action to restart game loop
+  pushBtn.onclick = () => (!interval) && gameStartLoop();
 }
 
 gameOver = () => {
-    if (immortalBird) return;
-    clearInterval(interval);
-    interval = null;
-    drawRetry();
-    ((birdDY = 0), (birdY = 200), (pipeX = canvasSize), (score = 0));
+  if (immortalBird) return;
+  clearInterval(interval);
+  interval = null;
+  drawRetry();
+  ((birdDY = 0), (birdY = 200), (pipeX = canvasSize), (score = 0));
 }
 
 // Bird death conditions
@@ -96,16 +96,16 @@ didBirdHitPipe = () => ((birdY < topPipeBottomY || birdY > topPipeBottomY + pipe
 didBirdFall = () => (birdY > canvasSize);
 
 gameStartLoop = () => {
-    pushBtn.onclick = () => (birdDY = 9);
+  pushBtn.onclick = () => (birdDY = 9);
 
-    interval = setInterval(() => {
-        drawSky();
-        drawBird();
-        drawPipes();
-        drawScore();
+  interval = setInterval(() => {
+    drawSky();
+    drawBird();
+    drawPipes();
+    drawScore();
 
-        (didBirdHitPipe() || didBirdFall()) && gameOver()
-    }, timeout)
+    (didBirdHitPipe() || didBirdFall()) && gameOver()
+  }, timeout)
 }
 
 gameStartLoop();
