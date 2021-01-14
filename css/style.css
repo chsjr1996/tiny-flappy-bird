@@ -4,6 +4,8 @@ body {
     align-items: center;
     height: 100vh;
     background: #ddd;
+    background-image: url('../assets/clouds.jpg');
+    background-repeat: round;
 }
 
 .game-container {
@@ -17,7 +19,7 @@ body {
     padding: 20px ;
     border-radius: 45px;
     background-color: #333;
-    box-shadow: 1px 1px 5px 5px gray;
+    box-shadow: 1px 1px 5px 5px #0e0e0e;
     overflow: hidden;
 }
 
@@ -67,4 +69,5 @@ body {
     width: 5px;
     height: 40px;
     background-color: black;
+    border-radius: 5px;
 }

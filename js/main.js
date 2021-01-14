@@ -3,16 +3,31 @@ const cnv = document.getElementById("game");
 const ctx = cnv.getContext("2d");
 const pushBtn = document.getElementById("pushBtn");
 
-// Set bird image
+// Set bird and clouds image
 const bird = new Image();
-bird.src = "bird.png";
+bird.src = "assets/bird.png";
 
-// Start vars
+// Not work yet
+// const pipe = new Image();
+// pipe.src = "assets/pipe.png";
+
+/**
+ * Start vars
+ */
+
+// Bird vars
 var birdX = birdDY = score = bestScore = 0;
-var timeout = birdSize = pipeWidth = topPipeBottomY = 24;
 var birdY = pipeGap = 200;
-var canvasSize = pipeX = 400;
+var timeout = birdSize = pipeWidth = topPipeBottomY = 24;
 var immortalBird = false; // For tests or others things...
+
+// Canvas and pipes
+var canvasSize = pipeX = 400;
+var canvasBg = "skyblue";
+var canvasGameOverBg = "black";
+var canvasPipeBg = "green";
+
+// Generic
 var interval;
 
 /**
@@ -28,7 +43,7 @@ getRandomArbitrary = (min, max) => {
  */
 
 drawSky = () => {
-  ctx.fillStyle = "skyblue";
+  ctx.fillStyle = canvasBg;
   ctx.fillRect(0, 0, canvasSize, canvasSize);
 }
 
@@ -38,7 +53,7 @@ drawBird = () => {
 }
 
 drawPipes = () => {
-  ctx.fillStyle = "green";
+  ctx.fillStyle = canvasPipeBg;
   pipeX -= 8;
 
   // Pipe off screen? Then reset pipe and randomize gap.
@@ -52,6 +67,10 @@ drawPipes = () => {
   // Draw top and bottom pipe
   ctx.fillRect(pipeX, 0, pipeWidth, topPipeBottomY);
   ctx.fillRect(pipeX, topPipeBottomY + pipeGap, pipeWidth, canvasSize);
+
+  // Not work yet
+  // ctx.drawImage(pipe, pipeX, 0, pipeWidth, topPipeBottomY);
+  // ctx.drawImage(pipe, pipeX, topPipeBottomY + pipeGap, pipeWidth, canvasSize);
 }
 
 drawScore = () => {
@@ -64,7 +83,7 @@ drawScore = () => {
 
 drawRetry = () => {
   // Cover all canvas with black rect
-  ctx.fillStyle = "black"
+  ctx.fillStyle = canvasGameOverBg
   ctx.fillRect(0, 0, canvasSize, canvasSize)
 
   // Draw retry message
