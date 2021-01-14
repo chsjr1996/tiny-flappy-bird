@@ -1,32 +1,34 @@
-<body style="height: 100vh; background: #111; text-align: center;">
-  <canvas id="c" width="400" height="400"></canvas>
-  <script>
-    context = c.getContext("2d");
-    const bird = new Image();
-    bird.src = "bird.png";
-    birdX = birdDY = score = bestScore = 0;
-    interval = birdSize = pipeWidth = topPipeBottomY = 24;
-    birdY = pipeGap = 200;
-    canvasSize = pipeX = 400;
-    c.onclick = () => (birdDY = 9) ;
-    setInterval(() => {
-      context.fillStyle = "skyblue";
-      context.fillRect(0,0,canvasSize,canvasSize); // Draw sky
-      birdY -= birdDY -= 0.5; // Gravity
-      context.drawImage(bird, birdX, birdY, birdSize * (524/374), birdSize); // Draw bird
-      context.fillStyle = "green";
-      pipeX -= 8; // Move pipe
-      pipeX < -pipeWidth && // Pipe off screen?
-        ((pipeX = canvasSize), (topPipeBottomY = pipeGap * Math.random())); // Reset pipe and randomize gap.
-      context.fillRect(pipeX, 0, pipeWidth, topPipeBottomY); // Draw top pipe
-      context.fillRect(pipeX, topPipeBottomY + pipeGap, pipeWidth, canvasSize); // Draw bottom pipe
-      context.fillStyle = "black";
-      context.fillText(score++, 9, 25); // Increase and draw score
-      bestScore = bestScore < score ? score : bestScore; // New best score?
-      context.fillText(`Best: ${bestScore}`, 9, 50); // Draw best score
-      (((birdY < topPipeBottomY || birdY > topPipeBottomY + pipeGap) && pipeX < birdSize * (524/374))// Bird hit pipe?
-       || birdY > canvasSize) && // Bird falls off screen
-      ((birdDY = 0), (birdY = 200), (pipeX = canvasSize), (score = 0)); // Bird died
-    }, interval)
-  </script>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="icon" type="image/png" href="favicon.png"/>
+  <link rel="stylesheet" href="style.css" />
+
+  <title>FlatBirdJS</title>
+</head>
+
+<body>
+  <div class="game-container">
+    <div class="screen-container">
+      <canvas id="game" width="400" height="400"></canvas>
+    </div>
+    <div class="button-area">
+      <span id="pushBtn" class="push-button"></span>
+    </div>
+    <div class="game-audio-container">
+      <div class="game-audio-bars"></div>
+      <div class="game-audio-bars"></div>
+      <div class="game-audio-bars"></div>
+      <div class="game-audio-bars"></div>
+      <div class="game-audio-bars"></div>
+    </div>
+  </div>
 </body>
+
+<script src="main.js"></script>
+
+</html>
