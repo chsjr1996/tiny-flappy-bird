@@ -1,6 +1,6 @@
 // Get canvas element and push button
-const canvas = document.getElementById("game");
-const context = canvas.getContext("2d");
+const cnv = document.getElementById("game");
+const ctx = cnv.getContext("2d");
 const pushBtn = document.getElementById("pushBtn");
 
 // Set bird image
@@ -27,17 +27,17 @@ getRandomArbitrary = (min, max) => {
  */
 
 drawSky = () => {
-    context.fillStyle = "skyblue";
-    context.fillRect(0, 0, canvasSize, canvasSize);
+    ctx.fillStyle = "skyblue";
+    ctx.fillRect(0, 0, canvasSize, canvasSize);
 }
 
 drawBird = () => {
     birdY -= birdDY -= 0.5;
-    context.drawImage(bird, birdX, birdY, birdSize * (524 / 374), birdSize);
+    ctx.drawImage(bird, birdX, birdY, birdSize * (524 / 374), birdSize);
 }
 
 drawPipes = () => {
-    context.fillStyle = "green";
+    ctx.fillStyle = "green";
     pipeX -= 8;
 
     // Pipe off screen? Then reset pipe and randomize gap.
@@ -49,26 +49,34 @@ drawPipes = () => {
         );
 
     // Draw top and bottom pipe
-    context.fillRect(pipeX, 0, pipeWidth, topPipeBottomY);
-    context.fillRect(pipeX, topPipeBottomY + pipeGap, pipeWidth, canvasSize);
+    ctx.fillRect(pipeX, 0, pipeWidth, topPipeBottomY);
+    ctx.fillRect(pipeX, topPipeBottomY + pipeGap, pipeWidth, canvasSize);
 }
 
 drawScore = () => {
-    context.fillStyle = "black";
-    context.fillText(score++, 9, 25);
+    ctx.fillStyle = "black";
+    ctx.font = "14px sans-serif";
+    ctx.fillText('Current: '+score++, 9, 25);
     bestScore = bestScore < score ? score : bestScore;
-    context.fillText(`Best: ${bestScore}`, 9, 50);
+    ctx.fillText(`Best: ${bestScore}`, 9, 50);
 }
 
 drawRetry = () => {
     // Cover all canvas with black rect
-    context.fillStyle = "black"
-    context.fillRect(0, 0, canvasSize, canvasSize)
+    ctx.fillStyle = "black"
+    ctx.fillRect(0, 0, canvasSize, canvasSize)
 
     // Draw retry message
-    context.fillStyle = "white"
-    context.fillText(`End game, your score is: ${score}`, (canvasSize / 2), (canvasSize / 2))
-    context.fillText('Click on screen to retry', (canvasSize / 2), ((canvasSize / 2) + 10));
+    ctx.fillStyle = "white"
+    ctx.font = "20px sans-serif";
+
+    const firstMsg = `End game, your score is: ${score}`;
+    const secondMsg = 'Push button to retry';
+    const firstMsgWidth = ctx.measureText(firstMsg).width;
+    const secondMsgWidth = ctx.measureText(secondMsg).width;
+
+    ctx.fillText(firstMsg, (canvasSize / 2) - (firstMsgWidth/2), (canvasSize / 2))
+    ctx.fillText(secondMsg, (canvasSize / 2) - (secondMsgWidth/2), ((canvasSize / 2) + 40));
 
     // Define action to restart game loop
     pushBtn.onclick = () => (!interval) && gameStartLoop();
